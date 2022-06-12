@@ -1,0 +1,83 @@
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('assets/img/land.jpg');">
+			<br>
+<!-- 			<div class="logo-img">
+			    <img src="images/one_direction_full_logo.png" style="width:100%"/>
+			</div> -->
+			<div class="wrap-login100">
+				<form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="login100-form validate-form">
+					<span class="login100-form-logo" >
+						<!-- <i class="zmdi zmdi-landscape"></i> -->
+						<img src="assets/img/White_w_logo-2.png" alt="Land" style="width:100%;" align="center">
+					</span>
+					<br>
+					<span class="login100-form-title p-b-34 p-t-27">
+						Welcome To LMS
+					</span>
+					<br>
+					<br>
+					<span class="login100-form-title p-b-12 p-t-10" style="font-size:18px">
+						Sign in
+					</span>
+					<br>
+					
+					<div class="wrap-input100 validate-input" data-validate = "Enter username">
+						<input [ngClass]="{ 'is-invalid': submitted && f.username.errors }" formControlName="username" class="input100" type="text" name="username" placeholder="Username">
+						<div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+							<div *ngIf="f.username.errors.required">Username is required</div>
+						</div>
+						<span class="focus-input100" data-placeholder="&#xf207;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<input [ngClass]="{ 'is-invalid': submitted && f.password.errors }" formControlName="password" formControlName="password" class="input100" type="password" name="pass" placeholder="Password">
+						<div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+							<div *ngIf="f.password.errors.required">Password is required</div>
+							<div *ngIf="f.password.errors.minlength">Password must be at least 4 characters</div>
+						</div>
+						<span class="focus-input100" data-placeholder="&#xf191;"></span>
+					</div>
+
+					<div class="contact100-form-checkbox">
+						<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+						<label class="label-checkbox100" for="ckb1">
+							Remember me
+						</label>
+					</div>
+
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn" type="submit">
+							<span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+							Sign in
+						</button>
+					</div>
+					<br>
+					<br>
+					<br>
+					<br>
+					<div class="text-center p-t-90">
+						<span class="txt1">No Account?</span>
+						<br>
+						<span class="txt1">Contact with IT team</span>
+						<!-- <a class="txt1" href="#">
+							No Account?
+							<br>
+							Contact with IT team
+						</a> -->
+					</div>
+				</form>	
+			</div>
+		</div>
+		<div class="footer_content">
+			<p>© One Direction IT<br>
+				<a href="http://www.onedirectionbd.com" target="_blank">www.onedirectionbd.com	</a></p>
+		</div>
+	</div>
+	<div id="dropDownSelect1"></div>
+
+
+
+	
+
+
+

@@ -1,0 +1,204 @@
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">Requisition</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">Source</li>
+                    <li class="breadcrumb-item active">View </li>
+                </ul>
+            </div>
+            <div class="col-auto float-right ml-auto">
+                <a class="btn add-btn" routerLink=""><i class="fa fa-share"></i> Back To
+                    list</a>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+
+    <div class="tab-content">
+        <div id="requisitionInfo" class="pro-overview tab-pane fade show active">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title title">Requisition Information</div>
+                            <table class="table table-striped custom-table datatable">
+                                <tr>
+                                    <th>No.</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.requisitionNo}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Date</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.reqDate}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Sale Media</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.saleMedia}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Broker Name</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.brokerName}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Broker Phone Number</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.contactNumber}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Broker NID</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.brokerNid}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Offered Land</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.offeringLand}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-sm-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title title">Land Owner Information</div>
+                            <table class="table table-striped custom-table datatable">
+                                <thead>
+                                    <tr>
+                                        <th>SL No.</th>
+                                        <th>Name</th>
+                                        <th>Date of Birth</th>
+                                        <th>NID</th>
+                                        <th>Ownership Type</th>
+                                        <th>Owned Land(Decimal)</th>
+                                        <th>Power of Attorney</th>
+                                        <th class="text-right no-sort">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title title">Land Address</div>
+                            <table class="table table-striped custom-table datatable">
+                                <tr>
+                                    <th>Division</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.division.name}}</td>
+                                </tr>
+                                <tr>
+                                    <th>District</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.district.name}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Thana</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.thana.name}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Mouza</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.mouza.name}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Khatian Type</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.khatianType.fullName}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Land Type</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.landType.landTypeName}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Khatian No.</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.khatianNo}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Dag No.</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.dagInfo.dagNumber}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title title">Land Information</div>
+                            <table class="table table-striped custom-table datatable">
+                                <tr>
+                                    <th>Record Quantity(in decimal)</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.dagInfo.recordQuantity}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Govt. Land Acquisition(in decimal)</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.dagInfo.govtLa}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Rest Land After Acquisition(in decimal)</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.dagInfo.restLandAfterLa}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Total Pre Bought(in decimal)</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.dagInfo.totalPreBought}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Available Land(in decimal)</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.dagInfo.availableLand}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Total Selling Quantity</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.sellingQty}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Govt. Mouza Rate(in Taka per decimal)</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.govtMouzaRate}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Offered Price(in Taka per decimal)</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.offeringPrice}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Remarks</th>
+                                    <td>:</td>
+                                    <td>{{reqObj.sourceRemarks}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

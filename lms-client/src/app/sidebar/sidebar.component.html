@@ -1,0 +1,52 @@
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-inner slimscroll">
+        <perfect-scrollbar [scrollIndicators]="false">
+            <div id="sidebar-menu" class="sidebar-menu">
+                <ul *ngIf="sidebarMenus.default">
+                    <li class="menu-title">
+                        <span>Main</span>
+                    </li>
+                    <li id="DB_L1_100" class="submenu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'dashboard' }">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.mainUrl === 'dashboard' }" routerLink="/dashboard">
+                            <i class="la la-dashboard"></i>
+                            <span>Dashboard </span>
+                            <!-- <span class="menu-arrow"></span> -->
+                        </a>
+   
+                    </li>
+                    <li>
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.mainUrl === 'dashboard' }" routerLink="/dashboard">
+                            <i class="la la-database"></i>
+                            <span>Setup </span>
+                        </a>
+                    </li>
+
+                    <li class="menu-title">
+                        <span>Purchase</span>
+                    </li>
+                    <li id="EMP_L1_200" class="submenu">
+                        <a href="javascript:" class="noti-dot"><i class="la la-wpforms"></i> <span> Requisition</span> 
+                            <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li id="EMP_L2_100" routerLink="/purchase/requisitionlist">
+                                <a href="javascript:"
+                                    [ngClass]="{ 'active' : urlComplete.subUrl === 'requisitionlist' || urlComplete.subUrl === 'requisitionlist'}">
+                                    Requisition List</a>
+                            </li>
+
+                            <li id="EMP_L2_200" routerLink="/purchase/createrequisition">
+                                <a href="javascript:"
+                                    [ngClass]="{ 'active' : urlComplete.subUrl === 'createrequisition'}">Create Requisition
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+
+            </div>
+        </perfect-scrollbar>
+    </div>
+</div>
+<!-- /Sidebar -->

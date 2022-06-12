@@ -1,0 +1,101 @@
+<div class="modal-content">
+    <div class="modal-header alert-primary">
+        <h3 class="modal-title" id="exampleModalLabel">{{title}}
+        </h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="bsModalRef.hide()">
+            <span>&times;</span>
+        </button>
+    </div>
+    <div class="modal-body crudForm">
+        <form class="ng-pristine" name="form" #f="ngForm">
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label text-right">Land Owner Name: </label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="" [(ngModel)]="landOwnerObj.ownerName"
+                        name="ownerName" #ownerName="ngModel">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label text-right">Date of Birth: </label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="" [(ngModel)]="landOwnerObj.dateOfBirth "
+                        name="dob" #dob="ngModel" autocomplete="off" bsDatepicker
+                        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label text-right">Age: </label>
+                <div class="col-sm-8">
+                    <input type="number" class="form-control" placeholder="" [(ngModel)]="landOwnerObj.age"
+                        name="age" #age="ngModel">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label text-right">NID: </label>
+                <div class="col-sm-8">
+                    <input type="" class="form-control" placeholder="" [(ngModel)]="landOwnerObj.nid"
+                        name="nid" #nid="ngModel">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label text-right">Owned Land: </label>
+                <div class="col-sm-8">
+                    <input type="" class="form-control" placeholder="" [(ngModel)]="landOwnerObj.ownedLand"
+                        name="ownedLand" #ownedLand="ngModel">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label text-right">Attorney: </label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="" [(ngModel)]="landOwnerObj.attorney"
+                        name="attorney" #attorney="ngModel">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label text-right">Ownership Type: </label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="" [(ngModel)]="landOwnerObj.ownershipType"
+                        name="ownershipType" #ownershipType="ngModel">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label text-right">Land's Owner Photo: </label>
+                <div class="col-sm-8 image-upload">
+                    <input type="file" multiple="multiple" class="form-control" placeholder="" [(ngModel)]="landOwnerObj.photoPath"
+                        name="photoPath" #photoPath="ngModel">
+                </div>
+            </div>
+
+            <!-- <div class="form-group row">
+                <label class="col-sm-4 col-form-label text-right">Land's Owner Photo: </label>
+                    <div class="col-sm-6">
+                      <div class="attachmentWrap">
+                        <input type="text" id="fname" name="firstname" placeholder="Type Here.." >
+                        <label for="file-input">
+                          <img src="https://image.flaticon.com/icons/svg/53/53582.svg" alt="" />
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-lg-2">
+                      <div class="image-upload" id="">
+                        <input id="file-input" type="file" multiple="multiple"/>
+                      </div>
+                    </div>
+              </div> -->
+
+        </form>
+    </div>
+    <div class="modal-footer breadcrumb m-0 p-1 btn-all">
+        <button type="button" class="btn btn-primary" (click)="saveOrUpdate()">Save</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="bsModalRef.hide()">Close</button>
+
+    </div>
+</div>

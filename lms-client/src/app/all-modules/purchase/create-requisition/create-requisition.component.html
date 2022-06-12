@@ -1,0 +1,738 @@
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">Requisition</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">Source</li>
+                    <li *ngIf="id" class="breadcrumb-item active">edit </li>
+                    <li *ngIf="!id" class="breadcrumb-item active">add </li>
+                </ul>
+            </div>
+            <div class="col-auto float-right ml-auto">
+                <a class="btn add-btn" routerLink=""><i class="fa fa-share"></i> Back To
+                    list</a>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+    <div class="card tab-box">
+        <div class="row user-tabs">
+            <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
+                <ul class="nav nav-tabs nav-tabs-bottom" *ngFor="let tab of reqTab">
+                    <li class="nav-item"><a href="#requisitionInfo" data-toggle="tab" class="nav-link active"
+                            *ngIf="tab.content == 'requisitionInfo' && tab.active">Requisition Info</a>
+                    </li>
+                    <li class="nav-item"><a href="#landOwnerInfo" data-toggle="tab" class="nav-link"
+                            *ngIf="tab.content == 'requisitionInfo' && tab.active">Land Owner's Info</a>
+                    </li>
+                    <!-- <li class="nav-item"><a href="#landOwnerInfo" data-toggle="tab" class="nav-link" *ngIf="tab.content == 'landOwnerInfo' && tab.active">Land Owner's Info</a></li>
+                    <div class="wrapper">
+                        <li class="nav-item"><a href="#landOwnerInfo" data-toggle="tab" class="nav-link isDisabled" *ngIf="tab.content != 'landOwnerInfo' && tab.active">Land Owner's Info</a></li>
+                    </div> -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content">
+        <!-- Profile Info Tab -->
+        <div id="requisitionInfo" class="pro-overview tab-pane fade show active">
+            <form (ngSubmit)="createRequisitionOnSubmit()" [formGroup]="createRequisitionForm">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title title">Requisition Information </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>No<span class="text-danger">*</span></label>
+                                    <!-- <input *ngIf="id" formControlName="requisitionNo" placeholder="No." class="form-control"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.requisitionNo.errors }" type="number"  disabled> -->
+
+                                    <input formControlName="requisitionNo" placeholder="No." class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.requisitionNo.errors }" type="number"
+                                        [(ngModel)]="reqObj.requisitionNo" disabled>
+                                    <div *ngIf="submitted && f.requisitionNo.errors " class="invalid-feedback">
+                                        <div *ngIf="f.requisitionNo.errors.required">*No. is required</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Date<span class="text-danger">*</span></label>
+                                    <div class="cal-icon">
+                                        <input class="form-control datetimepicker" bsDatepicker
+                                            formControlName="reqDate" placeholder="Date" [(ngModel)]="today"
+                                            [ngClass]="{ 'is-invalid': submitted && f.reqDate.errors }"
+                                            [maxDate]="today"
+                                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', isAnimated: true,returnFocusToInput: true}"
+                                            [(ngModel)]="reqObj.reqDate">
+                                        <div *ngIf="submitted && f.reqDate.errors" class="invalid-feedback">
+                                            <div *ngIf="f.reqDate.errors.required">*DOB is required
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Sale Media<span class="text-danger">*</span></label>
+                                    <ng-select [items]="reqObj.saleMedia" placeholder="Sale Media" [searchable]="true"
+                                        [clearable]="false" [virtualScroll]="true" class="custom-ng-select"
+                                        formControlName="saleMedia" [(ngModel)]="reqObj.saleMedia">
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Broker Name<span class="text-danger">*</span></label>
+                                    <input class="form-control" formControlName="brokerName" placeholder="Name"
+                                        class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.brokerName.errors }" type="text"
+                                        [(ngModel)]="reqObj.brokerName">
+                                    <div *ngIf="submitted && f.brokerName.errors " class="invalid-feedback">
+                                        <div *ngIf="f.brokerName.errors.required">*Broker Name is required</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Broker Phone Number<span class="text-danger">*</span></label>
+                                    <input class="form-control" formControlName="contactNumber" placeholder="Number"
+                                        class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.contactNumber.errors }" type="text"
+                                        [(ngModel)]="reqObj.contactNumber">
+                                    <div *ngIf="submitted && f.contactNumber.errors " class="invalid-feedback">
+                                        <div *ngIf="f.contactNumber.errors.required">*Broker Number is required</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Broker NID<span class="text-danger">*</span></label>
+                                    <input class="form-control" formControlName="brokerNid" placeholder="NID"
+                                        class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.brokerNid.errors }" type="text"
+                                        [(ngModel)]="reqObj.brokerNid">
+                                    <div *ngIf="submitted && f.brokerNid.errors " class="invalid-feedback">
+                                        <div *ngIf="f.brokerNid.errors.required">*NID is required</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Offered Land<span class="text-danger">*</span></label>
+                                    <input class="form-control" formControlName="offeringLand"
+                                        placeholder="Offered Land" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.offeringLand.errors }" type="text"
+                                        [(ngModel)]="reqObj.offeringLand">
+                                    <div *ngIf="submitted && f.offeringLand.errors " class="invalid-feedback">
+                                        <div *ngIf="f.offeringLand.errors.required">*Offered Land is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title title">Land Information</h3>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Division<span class="text-danger">*</span></label>
+                                    <ng-select [items]="reqObj.division" (change)="loadAllDistrict($event.id)"
+                                        bindLabel="name" placeholder="--Select--" bindValue="id" [searchable]="true"
+                                        [clearable]="false" [virtualScroll]="true" class="custom-ng-select"
+                                        formControlName="division" [(ngModel)]="reqObj.division">
+                                    </ng-select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>District<span class="text-danger">*</span></label>
+                                    <ng-select [items]="reqObj.district" (change)="loadAllThana($event.id)"
+                                        bindLabel="name" placeholder="--Select--" bindValue="id" [searchable]="true"
+                                        [clearable]="false" [virtualScroll]="true" class="custom-ng-select"
+                                        formControlName="district" [(ngModel)]="reqObj.district">
+                                    </ng-select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Thana<span class="text-danger">*</span></label>
+                                    <ng-select [items]="reqObj.thana" bindLabel="name" placeholder="--Select--"
+                                        bindValue="id" [searchable]="true" [clearable]="false" [virtualScroll]="true"
+                                        class="custom-ng-select" formControlName="thana" [(ngModel)]="reqObj.thana">
+                                    </ng-select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Mouza<span class="text-danger">*</span></label>
+                                    <ng-select [items]="reqObj.mouza" bindLabel="name" placeholder="--Select--"
+                                        bindValue="id" [searchable]="true" class="custom-ng-select"
+                                        formControlName="mouza"> [(ngModel)]="reqObj.mouza">
+                                    </ng-select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Khatian Type<span class="text-danger">*</span></label>
+                                    <ng-select [items]="reqObj.khatianType" bindLabel="fullName"
+                                        placeholder="--Select--" bindValue="id" class="custom-ng-select"
+                                        formControlName="khatianType" [(ngModel)]="reqObj.khatianType">
+                                    </ng-select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Land Type<span class="text-danger">*</span></label>
+                                    <ng-select [items]="reqObj.landType" bindLabel="landTypeName"
+                                        placeholder="--Select--" bindValue="id" class="custom-ng-select"
+                                        formControlName="landType" [(ngModel)]="reqObj.landType">
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Khatian No.<span class="text-danger">*</span></label>
+                                    <input class="form-control" formControlName="khatianNo" placeholder="Khatian No."
+                                        class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.khatianNo.errors }" type="text"
+                                        [(ngModel)]="reqObj.khatianNo">
+                                    <div *ngIf="submitted && f.khatianNo.errors " class="invalid-feedback">
+                                        <div *ngIf="f.khatianNo.errors.required">*Khatian No. is required</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Dag No.<span class="text-danger">*</span></label>
+                                    <ng-select [items]="reqObj.dagInfo" bindLabel="dagNumber" placeholder="--Select--"
+                                        bindValue="id" class="custom-ng-select" formControlName="dagInfo"
+                                        [(ngModel)]="reqObj.dagInfo.id" (change)="loadDagInfoById($event.id)">
+                                    </ng-select>
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Record Quantity(in decimal)<span class="text-danger">*</span></label>
+                                    <input class="form-control" formControlName="recordQuantity"
+                                        placeholder="Record Quantity" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.recordQuantity.errors }" type="number"
+                                        [(ngModel)]="reqObj.dagInfo.recordQuantity" disabled>
+                                    <div *ngIf="submitted && f.recordQuantity.errors " class="invalid-feedback">
+                                        <div *ngIf="f.recordQuantity.errors.required">*Record Quantity is required</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Govt. Land Acquisition (in decimal)<span class="text-danger">*</span></label>
+                                    <input class="form-control" formControlName="govtLa"
+                                        placeholder="Govt. Land Acquisition" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.govtLa.errors }" type="number"
+                                        [(ngModel)]="reqObj.dagInfo.govtLa" (ngModelChange)="restLand($event)" disabled>
+                                    <div *ngIf="submitted && f.govtLa.errors " class="invalid-feedback">
+                                        <div *ngIf="f.govtLa.errors.required">*Land Acquisition is required</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Rest Land After Acquisition (in decimal)<span
+                                            class="text-danger">*</span></label>
+                                    <input class="form-control" formControlName="restLandAfterLa"
+                                        placeholder="Rest Land After Acquisition" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.restLandAfterLa.errors }"
+                                        type="number" [(ngModel)]="reqObj.dagInfo.restLandAfterLa" disabled>
+                                    <div *ngIf="submitted && f.restLandAfterLa.errors " class="invalid-feedback">
+                                        <div *ngIf="f.restLandAfterLa.errors.required">*Rest Land After Acquisition is
+                                            required</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Total Pre Bought (in decimal)<span class="text-danger">*</span></label>
+                                    <input class="form-control" formControlName="totalPreBought"
+                                        placeholder="Total Pre Bought" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.totalPreBought.errors }" type="number"
+                                        [(ngModel)]="reqObj.dagInfo.totalPreBought" (ngModelChange)="availLand($event)"
+                                        disabled>
+                                    <div *ngIf="submitted && f.totalPreBought.errors " class="invalid-feedback">
+                                        <div *ngIf="f.totalPreBought.errors.required">*Pre Bought is required</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Available Land (in decimal)<span class="text-danger">*</span></label>
+                                    <input class="form-control" formControlName="availableLand"
+                                        placeholder="Available Land" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.availableLand.errors }" type="number"
+                                        [(ngModel)]="reqObj.dagInfo.availableLand" disabled>
+                                    <div *ngIf="submitted && f.availableLand.errors " class="invalid-feedback">
+                                        <div *ngIf="f.availableLand.errors.required">*Available Land is required</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Total Selling Quantity (in decimal)<span class="text-danger">*</span></label>
+                                    <input class="form-control" formControlName="sellingQty"
+                                        placeholder="Total Selling Quantity" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.sellingQty.errors }" type="number"
+                                        [(ngModel)]="reqObj.sellingQty">
+                                    <div *ngIf="submitted && f.sellingQty.errors " class="invalid-feedback">
+                                        <div *ngIf="f.sellingQty.errors.required">*Selling Quantity is required</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Govt. Mouza Rate<span class="text-danger">*</span></label>
+                                    <input class="form-control" formControlName="govtMouzaRate"
+                                        placeholder="Govt. Mouza Rate" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.govtMouzaRate.errors }" type="number"
+                                        [(ngModel)]="reqObj.govtMouzaRate">
+                                    <div *ngIf="submitted && f.govtMouzaRate.errors " class="invalid-feedback">
+                                        <div *ngIf="f.govtMouzaRate.errors.required">*Mouza Rate is required</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Offered Price(Taka per decimal)<span class="text-danger">*</span></label>
+                                    <input class="form-control" formControlName="offeringPrice"
+                                        placeholder="Offered Price" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.offeringPrice.errors }" type="number"
+                                        [(ngModel)]="reqObj.offeringPrice">
+                                    <div *ngIf="submitted && f.offeringPrice.errors " class="invalid-feedback">
+                                        <div *ngIf="f.offeringPrice.errors.required">*Offered Price is required</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Remarks<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" formControlName="sourceRemarks"
+                                        placeholder="Remarks" value="" [(ngModel)]="reqObj.sourceRemarks">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title title">Process Information</h3>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Layer<span class="text-danger">*</span></label>
+                                    <select class="select form-control" formControlName="district">
+                                        <option value="">Select Layer</option>
+                                        <option>Legal</option>
+                                        <option>Surveyor</option>
+                                        <option>Accounts</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <label>Comments</label>
+                                    <input type="text" class="form-control" style="height:100px; padding-top: 0;
+                                                padding-left: 0;" placeholder="" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="submit-section" *ngIf="isAddMode">
+                    <button class="btn btn-primary submit-btn" type="submit">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Forward
+                        <!-- [disabled]="!addEmployeeForm.valid" -->
+                    </button>
+                </div>
+                <div class="submit-section" *ngIf="!isAddMode">
+                    <button class="btn btn-primary submit-btn" type="submit">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Update
+                        <!-- [disabled]="!addEmployeeForm.valid" -->
+                    </button>
+                </div>
+
+            </form>
+        </div>
+        <!-- /Profile Info Tab -->
+
+        <!-- Projects Tab -->
+        <div class="tab-pane fade" id="landOwnerInfo">
+            <!-- list view start -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-tools">
+                                <!-- <a class="btn btn-outline-primary" data-toggle="modal" data-target="#add_owner"><i
+                                                    class="fa fa-plus"></i> Add Owner &nbsp;&nbsp;&nbsp;</a> -->
+                                <button type="button" class="btn btn-primary punch-btn" data-toggle="modal"
+                                    data-target="#add_owner"><i class="fa fa-plus"></i>&nbsp;Add Owner</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div class="d-flex justify-content-start pb-1">
+                                    <div class="pgn-displayDataInfo">
+                                        <span class="page-item disabled">Displaying 10 entries</span>
+                                    </div>
+                                </div>
+                                <table class="table table-striped custom-table datatable">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Date of Birth</th>
+                                            <th>NID</th>
+                                            <th>Ownership Type</th>
+                                            <th>Owned Land(Decimal)</th>
+                                            <th>Power of Attorney</th>
+                                            <th class="text-right no-sort">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <!-- <tr *ngFor="let row of hrTlAttnDaily | paginate : {
+                                                    itemsPerPage: pageSize,
+                                                    currentPage: pageNum,
+                                                    totalItems: totalItem
+                                                };let i = index" [class.active]="i == currentIndex">
+                                                        <td>
+                                                            {{ 1 + i}}
+                                                        </td>
+
+                                                        <td>{{row.hrCrEmpId.displayName}}</td>
+                                                        <td>{{row.hrCrEmpId.loginCode}}</td>
+                                                        <td>{{row.createDate}}</td>
+                                                        <td>{{row.entryTime|date:'medium'}}</td>
+                                                        <td>{{row.entryDate|date}}</td>
+                                                        <td>{{row.srcType}}</td>
+
+
+                                                        <td class="text-right">
+                                                            <div class="dropdown dropdown-action">
+                                                                <a class="action-icon dropdown-toggle" data-toggle="dropdown"
+                                                                    aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                                <div class="dropdown-menu dropdown-menu-right">
+                                                                    <a class="dropdown-item" data-toggle="modal"
+                                                                        data-target="#edit_employee" (click)="edit(row.id)"><i
+                                                                            class="fa fa-user m-r-5"></i> Details</a>
+                                                                    <a class="dropdown-item" data-toggle="modal"
+                                                                        data-target="#edit_employee" (click)="edit(row.id)"><i
+                                                                            class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                                    <a class="dropdown-item" data-toggle="modal"
+                                                                        data-target="#delete_employee" (click)="tempId = row.id"><i
+                                                                            class="fa fa-trash-o m-r-5"></i>
+                                                                        Delete</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr *ngIf="hrTlAttnDaily.length === 0">
+                                                        <td colspan="10">
+                                                            <h5 style="text-align: center;">No data found</h5>
+                                                        </td>
+
+                                                    </tr> -->
+                                    </tbody>
+
+                                </table>
+                                <div class="d-flex justify-content-end ">
+
+                                    <div>
+                                        Items per Page
+                                        <select class="pgn-pageSizeOption">
+                                            <option>
+
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="pgn-pageSliceCt">
+                                        <pagination-controls responsive="true" previousLabel="Prev" nextLabel="Next">
+                                        </pagination-controls>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- <span class="punch-btn-section">
+                            <button type="button" class="btn btn-primary punch-btn" data-toggle="modal" data-target="#add_owner"><i class="fa fa-plus"></i>Add Owner</button>
+                        </span> -->
+            <!-- <div class="card">
+                            <div class="card-body">
+                                <form (ngSubmit)="addOwnerOnSubmit()" [formGroup]="addOwnerForm">
+                                    <h3 class="card-title">Land Owner's Information</h3>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="col-form-label">Name<span class="text-danger">*</span></label>
+                                                <input class="form-control" formControlName="name" class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && ownerF.name.errors }" type="text">
+                                                <div *ngIf="submitted && ownerF.name.errors " class="invalid-feedback">
+                                                    <div *ngIf="ownerF.name.errors.required">*Name is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="col-form-label">DOB <span class="text-danger">*</span></label>
+                                                <div class="cal-icon">
+                                                    <input class="form-control datetimepicker" bsDatepicker type="text" formControlName="dob" class="form-control"
+                                                        [ngClass]="{ 'is-invalid': submitted && ownerF.dob.errors }" type="text" 
+                                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', isAnimated: true,returnFocusToInput: true}">
+                                                    <div *ngIf="submitted && ownerF.dob.errors" class="invalid-feedback">
+                                                        <div *ngIf="ownerF.dob.errors.required">*DOB is required
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="col-form-label">NID <span class="text-danger">*</span></label>
+                                                <input class="form-control" formControlName="nid" class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && ownerF.nid.errors }" type="text">
+                                                <div *ngIf="submitted && ownerF.nid.errors" class="invalid-feedback">
+                                                    <div *ngIf="ownerF.nid.errors.required">*NID is required</div>
+                                                </div>  
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label>Choose Photo<span class="text-danger">*</span></label>
+                                                <!-- accept="file_extension|image/*" required="" -->
+            <!-- <input class="form-control" formControlName="photo" class="form-control" 
+                                                [ngClass]="{ 'is-invalid': submitted && ownerF.photo.errors }" type="file">
+                                                <div *ngIf="submitted && ownerF.photo.errors " class="invalid-feedback">
+                                                    <div *ngIf="ownerF.photo.errors.required">Choose Photo is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label>Power of Attorney<span class="text-danger">*</span></label>
+                                                <input class="form-control" formControlName="poa" class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && ownerF.poa.errors }" type="text">
+                                                <div *ngIf="submitted && ownerF.poa.errors" class="invalid-feedback">
+                                                    <div *ngIf="ownerF.poa.errors.required">*Power of attorney is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="col-form-label">Owned Land<span class="text-danger">*</span></label>
+                                                <input class="form-control" formControlName="ownedLand" class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && ownerF.ownedLand.errors }" type="text">
+                                                <div *ngIf="submitted && ownerF.ownedLand.errors" class="invalid-feedback">
+                                                    <div *ngIf="ownerF.ownedLand.errors.required">*Owned land is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="col-form-label">Ownership Type<span class="text-danger">*</span></label>
+                                                <input class="form-control" formControlName="ownershipType" class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && ownerF.ownershipType.errors }" type="text">
+                                                <div *ngIf="submitted && ownerF.ownershipType.errors" class="invalid-feedback">
+                                                    <div *ngIf="ownerF.ownershipType.errors.required">*Ownership type is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="submit-section">
+                                        <!-- <button class="btn btn-primary submit-btn" type="submit">
+                                            <span *ngIf="assgnmntLoading" class="spinner-border spinner-border-sm mr-1"></span>
+                                            Save -->
+            <!-- [disabled]="!addEmployeeForm.valid" -->
+            <!-- </button> -->
+            <!-- <div class="submit-section">
+                                            <button class="btn btn-primary submit-btn" type="submit">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div> -->
+        </div>
+        <!-- /Projects Tab -->
+    </div>
+
+</div>
+<!-- Add Employee Modal -->
+<div id="add_owner" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Owner</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="addOwnerForm">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Name<span class="text-danger">*</span></label>
+                                <input class="form-control" formControlName="name" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && ownerF.name.errors }" type="text">
+                                <div *ngIf="submitted && ownerF.name.errors " class="invalid-feedback">
+                                    <div *ngIf="ownerF.name.errors.required">*Name is required</div>
+                                </div>
+                                <!-- Another two types of validation -->
+                                <!-- <input type="text"  formControlName="name" class="form-control invalid">
+                                <span style="font-size: 12px;" class="text-danger" *ngIf="Name && Name.invalid && Name.touched">Field is required</span> -->
+
+                                <!-- <input class="form-control" type="text"
+                                    [class.invalid]="addEmployeeForm.get('FirstName').invalid && addEmployeeForm.get('FirstName').touched"
+                                    formControlName="FirstName">
+                                <div
+                                    *ngIf="addEmployeeForm.get('FirstName').invalid && addEmployeeForm.get('FirstName').touched">
+                                    <small
+                                        *ngIf="addEmployeeForm.get('FirstName').invalid && addEmployeeForm.get('FirstName').touched"
+                                        class="text-danger"> *Firstname is required</small>
+                                </div> -->
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">DOB <span class="text-danger">*</span></label>
+                                <div class="cal-icon">
+                                    <input class="form-control datetimepicker" bsDatepicker type="text"
+                                        formControlName="dob" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && ownerF.dob.errors }" type="text"
+                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', isAnimated: true,returnFocusToInput: true}">
+                                    <div *ngIf="submitted && ownerF.dob.errors" class="invalid-feedback">
+                                        <div *ngIf="ownerF.dob.errors.required">*DOB is required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">NID <span class="text-danger">*</span></label>
+                                <input class="form-control" formControlName="nid" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && ownerF.nid.errors }" type="text">
+                                <div *ngIf="submitted && ownerF.nid.errors" class="invalid-feedback">
+                                    <div *ngIf="ownerF.nid.errors.required">*NID is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Choose Photo</label>
+                                <!-- accept="file_extension|image/*" required="" -->
+                                <input class="form-control" formControlName="photo" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && ownerF.photo.errors }" type="file">
+                                <div *ngIf="submitted && ownerF.photo.errors " class="invalid-feedback">
+                                    <div *ngIf="ownerF.photo.errors.required">Choose Photo is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Power of Attorney</label>
+                                <input class="form-control" formControlName="poa" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && ownerF.poa.errors }" type="text">
+                                <div *ngIf="submitted && ownerF.poa.errors" class="invalid-feedback">
+                                    <div *ngIf="ownerF.poa.errors.required">*Power of attorney is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Owned Land<span class="text-danger">*</span></label>
+
+                                <input class="form-control" formControlName="ownedLand" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && ownerF.ownedLand.errors }" type="text">
+                                <div *ngIf="submitted && ownerF.ownedLand.errors" class="invalid-feedback">
+                                    <div *ngIf="ownerF.ownedLand.errors.required">*Owned land is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Ownership Type<span class="text-danger">*</span></label>
+
+                                <input class="form-control" formControlName="ownershipType" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && ownerF.ownershipType.errors }" type="text">
+                                <div *ngIf="submitted && ownerF.ownershipType.errors" class="invalid-feedback">
+                                    <div *ngIf="ownerF.ownershipType.errors.required">*Ownership type is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-section" *ngIf="isAddMode">
+                        <button class="btn btn-primary submit-btn" type="submit">Submit</button>
+                    </div>
+
+                    <div class="submit-section" *ngIf="!isAddMode">
+                        <button class="btn btn-primary submit-btn" type="submit">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                            Update
+                            <!-- [disabled]="!addEmployeeForm.valid" -->
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
